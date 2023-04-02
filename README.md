@@ -26,6 +26,7 @@ User can
 
 
 ## Instructions to test app locally
+(this app is not available for testing in fly.io)
 
 * Clone this repository to your computer and go to its root directory.
 * Create file .env and set its contents as follows:

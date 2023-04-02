@@ -1,0 +1,29 @@
+{% if session.username %}
+<h1>Organization app</h1>
+<p>You are logged in as {{ session.username }}  
+<a href="/logout">Log out</a>
+</p>
+<h3>To do-lists:</h3>
+
+{{list}}
+{% for list in lists %}
+<a href="/list/{{ list[1] }}">{{list[0]}}</a><br>
+{% endfor %}
+
+<br>
+
+<a href="/create_list">Create a new list</a>
+
+{% else %}
+<h1>Organization app</h1>
+<form action="/login" method="POST">
+<h2>Login</h2>
+<p>Username:<br>
+<input type="text" name="username"></p>
+<p>Password:<br>
+<input type="password" name="password"></p>
+<input type="submit" value="Login"><br>
+<p>
+<a href="/register">Register</a>
+</form>
+{% endif %}

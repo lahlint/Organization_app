@@ -73,6 +73,13 @@ def create_list():
 @app.route("/add_list", methods=["POST"])
 def add_list():
     list_name = request.form["list_name"]
+    username = session.get("username")
+    sql = text("SELECT id FROM users WHERE username=:username")
+    user_id = db.session.execute(sql, {"username":username}).fetchone()[0]
+    sql = text("SELECT 1 FROM lists WHERE name=:list_name AND user_id=:user_id")
+    result = db.session.execute(sql, {"list_name":list_name, "user_id":user_id})
+    if result.fetchone():
+        return render_template("error.html", message="A list with this name already exists")
     sql = text("SELECT id FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username": session.get("username")})
     user_id = result.fetchone()[0]

@@ -32,6 +32,10 @@ def register():
 @app.route("/add_user", methods=["POST"])
 def add_user():
     username = request.form["username"]
+    sql = text("SELECT 1 FROM users WHERE username=:username")
+    result = db.session.execute(sql, {"username":username})
+    if result.fetchone():
+        return render_template("error.html", message="Username already exists")
     password = request.form["password"]
     hash_value = generate_password_hash(password)
     sql = text("INSERT INTO users (username, password) VALUES (:username, :password)")

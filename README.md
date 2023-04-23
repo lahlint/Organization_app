@@ -20,15 +20,19 @@ In current version of the app:
 
 User can
 * create a new account, sign in and sign out
-* create new lists and name them
+* create new lists and name them and remove them
 * add tasks on lists mark them as done and as undone
+* remove all tasks in a list that are marked as done
 * view a list of all lists and open lists one at a time
 
 
 ## Instructions to test app locally
 (this app is not available for testing in fly.io)
 
-* Clone this repository to your computer and go to its root directory.
+* Clone this repository to your computer and go to its root directory and use the following command:
+
+```$ cd organization_app/```
+
 * Create file .env and set its contents as follows:
 
 ```DATABASE_URL=<database-local-address>```

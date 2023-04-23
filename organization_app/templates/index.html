@@ -3,7 +3,7 @@
 <p>You are logged in as {{ session.username }}  
 <a href="/logout">Log out</a>
 </p>
-<h3>To do-lists:</h3>
+<h2>To do-lists:</h2>
 
 {{list}}
 {% for list in lists %}
@@ -13,6 +13,8 @@
 <br>
 
 <a href="/create_list">Create a new list</a>
+<br>
+<a href="/remove_lists">Remove a list</a>
 
 {% else %}
 <h1>Organization app</h1>

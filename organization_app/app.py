@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 from os import getenv
 from werkzeug.security import check_password_hash, generate_password_hash
+from secrets import token_hex
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
@@ -19,6 +21,7 @@ def index():
         sql = text("SELECT name, id FROM lists WHERE user_id=:user_id")
         result = db.session.execute(sql, {"user_id":user_id})
         lists = result.fetchall()
+        db.session.commit()
         return render_template("index.html", lists=lists) 
     return render_template("index.html")
 
@@ -42,7 +45,7 @@ def login():
     password = request.form["password"]
     sql = text("SELECT id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()        #sql = text("SELECT id FROM users WHERE")
+    user = result.fetchone() 
     if not user:
         return render_template("error.html", message="Username does not exist")
     else:
@@ -86,20 +89,21 @@ def add_task():
     sql = text("INSERT INTO tasks (list_id, task, status) VALUES (:list_id, :task, :status)")
     db.session.execute(sql, {"list_id":list_id , "task":task, "status":0})
     db.session.commit()
-    return redirect("/")
+    return redirect("/list/"+str(list_id))
 
 @app.route("/list/<list_id>")
-def show_list2(list_id):
+def show_list(list_id):
     sql = text("SELECT name FROM lists WHERE id=:list_id")
     result = db.session.execute(sql, {"list_id":list_id})
     name = result.fetchone()[0]
-    sql = text("SELECT task, status, t.id FROM tasks t LEFT JOIN lists l ON l.id=t.list_id WHERE name=:name")
-    result = db.session.execute(sql, {"name":name})
+    sql = text("SELECT task, status, t.id FROM tasks t LEFT JOIN lists l ON l.id=t.list_id WHERE name=:name AND status!=:status ORDER BY t.id")
+    result = db.session.execute(sql, {"name":name, "status":2})
     tasks = result.fetchall()
     tasks2 = []
     for task in tasks:
         task = task[0]
         tasks2.append(task)
+    db.session.commit()
     return render_template("list.html", list=name, tasks=tasks, list_id=list_id)
 
 @app.route("/done", methods=["POST"])
@@ -107,7 +111,7 @@ def done():
     task = request.form["task"]
     list_id = request.form["list"]
     sql = text("UPDATE tasks SET status=:new_status WHERE id=:id")
-    result = db.session.execute(sql, {"new_status":1, "id":task})
+    db.session.execute(sql, {"new_status":1, "id":task})
     db.session.commit()
     return redirect("/list/"+list_id)
 
@@ -116,6 +120,33 @@ def undo():
     task = request.form["task"]
     list_id = request.form["list"]
     sql = text("UPDATE tasks SET status=:new_status WHERE id=:id")
-    result = db.session.execute(sql, {"new_status":0, "id":task})
+    db.session.execute(sql, {"new_status":0, "id":task})
     db.session.commit()
     return redirect("/list/"+list_id)
+
+@app.route("/remove_tasks", methods=["POST"])
+def remove_tasks():
+    list_id = request.form["list"]
+    sql = text("UPDATE tasks SET status=:new_status WHERE status=:status AND list_id=:list_id")
+    db.session.execute(sql, {"new_status":2, "status":1, "list_id":list_id})
+    db.session.commit()
+    return redirect("/list/"+list_id)
+
+@app.route("/remove_lists")
+def remove_lists():
+    sql = text("SELECT id FROM users WHERE username=:username")
+    result = db.session.execute(sql, {"username": session.get("username")})
+    user_id = result.fetchone()[0]
+    sql = text("SELECT name, id FROM lists WHERE user_id=:user_id")
+    result = db.session.execute(sql, {"user_id":user_id})
+    lists = result.fetchall()
+    db.session.commit()
+    return render_template("remove_lists.html",lists=lists)
+
+@app.route("/remove_list", methods=["POST"])
+def remove_list():
+    list_id = request.form["list_id"]
+    sql = text("DELETE FROM lists WHERE id=:list_id")
+    db.session.execute(sql, {"list_id":list_id})
+    db.session.commit()
+    return redirect("/remove_lists")

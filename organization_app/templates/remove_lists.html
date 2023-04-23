@@ -1,0 +1,13 @@
+<h1>Organization app</h1>
+<h3>Remove lists</h3>
+
+{% for list in lists %}
+    <form action="/remove_list", method="POST">
+        {{list[0]}}
+        <input type="hidden" name="list_id" value="{{list[1]}}">
+        <input type="submit" value="Delete">
+    </form>
+{% endfor %}
+
+<br>
+<a href="/">Back to homepage</a>

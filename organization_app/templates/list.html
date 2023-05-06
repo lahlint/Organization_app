@@ -1,33 +1,47 @@
-<h1>Organization app</h1>
-<h3>{{list}}</h3>
-
-{% for task in tasks %}
-{% if task[1] == 0 %}
-<form action="/done", method="POST">
-    {{ task[0] }}
-    <input type="hidden" name="task" value="{{task[2]}}">
-    <input type="hidden" name="list" value="{{list_id}}">
-    <input type="submit" value="Done">
-</form>
-{% elif task[1] == 1 %}
-<form action="/undo", method="POST">
-    {{ task[0] }}
-    <input type="hidden" name="task" value="{{task[2]}}">
-    <input type="hidden" name="list" value="{{list_id}}">
-    <input type="submit" value="Undo">
-</form>
-{% endif %}
-{% endfor %}
-<br>
-<br>
-<form action="/add_task" method="POST">
-    <input type="text" name="task">
-    <input type="hidden" name="list" value="{{list}}">
-    <input type="hidden" name="tasks" value="{{tasks}}">
-    <input type="submit" value="Add task">
-</form>
-<form action="/remove_tasks" method="POST">
-    <input type="hidden" name="list" value="{{list_id}}">
-    <input type="submit" value="Remove done tasks">
-</form>
-<a href="/">Back to homepage</a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../static/style.css">
+    <title>List</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Organization app</h1>
+    </div>
+    <div class=" content">
+      <h3>{{list}}</h3>
+      {% for task in tasks %}
+      {% if task[1] == 0 %}
+      <form action="/done", method="POST">
+        {{ task[0] }}
+        <input type="hidden" name="task" value="{{task[2]}}">
+        <input type="hidden" name="list" value="{{list_id}}">
+        <input type="submit" value="Done">
+      </form>
+      {% elif task[1] == 1 %}
+      <form action="/undo", method="POST">
+        {{ task[0] }}
+        <input type="hidden" name="task" value="{{task[2]}}">
+        <input type="hidden" name="list" value="{{list_id}}">
+        <input type="submit" value="Undo">
+      </form>
+      {% endif %}
+      {% endfor %}
+      <br>
+      <br>
+      <form action="/add_task" method="POST">
+        <input type="text" name="task">
+        <input type="hidden" name="list" value="{{list}}">
+        <input type="hidden" name="tasks" value="{{tasks}}">
+        <input type="submit" value="Add task">
+      </form>
+      <form action="/remove_tasks" method="POST">
+        <input type="hidden" name="list" value="{{list_id}}">
+        <br>
+        <input type="submit" value="Remove done tasks">
+      </form>
+      <br>
+      <a href="/">Back to homepage</a>
+    </div>
+  </body>
+</html>

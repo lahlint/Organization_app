@@ -1,10 +1,25 @@
-<h1>Organization app</h1>
-<h2>Register</h2>
-<form action="/add_user" method="POST">
-<p>Username:<br>
-<input type="text" name="username"></p>
-<p>Password:<br>
-<input type="password" name="password"></p>
-<input type="submit" value="Register"><br>
-</form>
-<a href="/">Back to homepage</a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Organization app</h1>
+    </div>
+    <div class="content">
+      <h2>Register</h2>
+      <form action="/add_user" method="POST">
+        <p>Username:<br>
+        <input type="text" name="username"></p>
+        <p>Password:<br>
+        <input type="password" name="password"></p>
+        <input type="submit" value="Register"><br>
+      </form>
+      <br>
+      <a href="/">Back to homepage</a>
+    </div>
+  </body>
+</html>

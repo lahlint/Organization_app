@@ -1,0 +1,18 @@
+body {
+    color: black;
+    margin: 0 auto;
+    max-width: 50em;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    line-height: 1.5;
+    background-color: beige;
+    
+}
+.header {
+    background-color: aquamarine;
+    padding: 2em 1em;
+    font-size: 2em;
+}
+.content {
+    background-color: white;
+    padding: 1.5em 2em;
+}

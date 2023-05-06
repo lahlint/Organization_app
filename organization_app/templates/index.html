@@ -14,7 +14,7 @@
       <p>You are logged in as {{ session.username }}  
       <a href="/logout">Log out</a>
       </p>
-      <h2>To do-lists:</h2>
+      <h2>To do -lists:</h2>
       {{list}}
       {% for list in lists %}
       <a href="/list/{{ list[1] }}">{{list[0]}}</a><br>

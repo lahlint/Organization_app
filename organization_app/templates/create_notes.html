@@ -1,0 +1,24 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Create a new list</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Organization app</h1>
+    </div>
+    <div class="content">
+      <form action="/add_notes" method="POST">
+        <h3>Create a new note list</h3>
+        <p>Note list name:</p>
+        <input type="text" name="notes_name">
+        <input type="submit" value="Create notes list">
+      </form>
+      <br>
+      <form action="/">
+        <input type="submit" value="Back to homepage">
+      </form>
+    </div>
+  </body>
+</html>

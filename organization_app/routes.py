@@ -4,9 +4,12 @@ from flask import render_template, request, redirect, session
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
 from secrets import token_hex
+import datetime
 import list_functions
 import user_functions
 import task_functions
+import notes_functions
+import entry_functions
 
 
 @app.route("/")
@@ -14,7 +17,8 @@ def index():
     if session.get("username"):
         username = session.get("username")
         lists = list_functions.get_lists(username)
-        return render_template("index.html", lists=lists) 
+        notes = notes_functions.get_notes(username)
+        return render_template("index.html", lists=lists, notes=notes) 
     return render_template("index.html")
 
 @app.route("/register")
@@ -120,3 +124,41 @@ def remove_list():
     list_id = request.form["list_id"]
     list_functions.delete_list(list_id)
     return redirect("/remove_lists")
+
+@app.route("/create_notes")
+def create_notes():
+    return render_template("create_notes.html")
+
+@app.route("/add_notes", methods=["POST"])
+def add_notes():
+    notes_name = request.form["notes_name"]
+    username = session.get("username")
+    user_id = user_functions.get_user_id(username)
+    #notes_exists = list_functions.check_if_list_already_exists(list_name, user_id)
+    #if list_exists:
+    #    return render_template("error.html", message="A list with this name already exists")
+    notes_functions.add_notes(notes_name, user_id)
+    return redirect("/")
+
+@app.route("/add_entry", methods=["POST"])
+def add_entry():
+    notes_name = request.form["notes_name"]
+    entry = request.form["entry"]
+    username = session.get("username")
+    user_id = user_functions.get_user_id(username)
+    timestamp = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")#.timestamp()
+    notes_id = notes_functions.get_notes_id(notes_name, user_id)
+    entry_functions.add_entry(notes_id, entry, timestamp)
+    return redirect("/notes_list/" + str(notes_id))
+
+@app.route("/notes_list/<notes_id>")
+def show_notes_list(notes_id):
+    username = session.get("username")
+    #user_id = user_functions.get_user_id(username)
+    #rights = list_functions.check_rights_to_list(user_id, list_id)
+    #if not rights:
+    #    return render_template("error.html", message="No rights to view this list")
+    notes_name = notes_functions.get_notes_name(notes_id)
+    entrys = entry_functions.get_entrys(notes_id)
+    return render_template("notes_list.html", notes=notes_name, entrys=entrys, notes_id=notes_id)
+

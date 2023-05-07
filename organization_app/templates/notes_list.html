@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Notes list</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Organization app</h1>
+    </div>
+    <div class=" content">
+      <h3>{{notes}}</h3>
+      {% for entry in entrys %}
+      <div id="entry">
+        <div id="timestamp">
+          {{entry[1]}}
+        </div>
+        <div id="entrytext">
+          {{entry[0]}}
+        </div>
+      </div>
+      {% endfor %}
+      <br>
+      <br>
+      <form action="/add_entry" method="POST">
+        <input type="text" name="entry">
+        <input type="hidden" name="notes_name" value="{{notes}}">
+        <input type="hidden" name="entrys" value="{{entrys}}">
+        <input type="submit" value="Add entry">
+      </form>
+      <br>
+      <a href="/">Back to homepage</a>
+    </div>
+  </body>
+</html>

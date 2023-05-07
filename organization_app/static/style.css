@@ -11,8 +11,36 @@ body {
     background-color: aquamarine;
     padding: 2em 1em;
     font-size: 2em;
+    border-radius: 1em;
+    margin-top: .5em;
+    margin-bottom: .5em;
 }
 .content {
     background-color: white;
     padding: 1.5em 2em;
+    margin-top: .5em;
+    border-radius: 1em;
+}
+#entry {
+    margin: .5em;
+    padding: .5em;
+    background-color: rgb(240, 238, 238);
+    border-radius: .5em;
+}
+.list_object {
+    margin: .5em;
+    padding: .5em;
+    background-color: rgb(240, 238, 238);
+    border-radius: .5em;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+.link {
+    margin: .5em;
+    padding: .5em;
+    width: auto;
+    background-color: rgb(240, 238, 238);
+    border-radius: .5em;
 }

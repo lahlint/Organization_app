@@ -10,19 +10,38 @@
     <div class="header">
       <h1>Organization app</h1>
     </div>
-    <div class="content">    
-      <p>You are logged in as {{ session.username }}  
-      <a href="/logout">Log out</a>
+    <div class="content">   
+      <form action="/logout">
+        <p>You are logged in as {{ session.username }}  
+        <input type="submit" value="Log out">
+      </form>
       </p>
       <h2>To do -lists:</h2>
-      {{list}}
       {% for list in lists %}
-      <a href="/list/{{ list[1] }}">{{list[0]}}</a><br>
+      <div class="list_object">
+        <a href="/list/{{ list[1] }}">{{list[0]}}</a><br>
+      </div>
       {% endfor %}
       <br>
-      <a href="/create_list">Create a new list</a>
+      <form action="/create_list">
+        <input type="submit" value="Create a new list">
+      </form>
       <br>
-      <a href="/remove_lists">Remove a list</a>
+      <form action="/remove_lists">
+        <input type="submit" value="Remove a list">
+      </form>
+      <br>
+      <h2>Notes:</h2>
+      {% for notes_list in notes %}
+      <div class="list_object">
+        <a href="/notes_list/{{ notes_list[1] }}">{{notes_list[0]}}</a><br>
+      </div>
+      {% endfor %}
+      <br>
+      <form action="/create_notes">
+        <input type="submit" value="Create a new note list">
+      </form>
+      <br>
     </div>
     {% else %}
     <div class="header">
@@ -37,7 +56,9 @@
       <input type="password" name="password"></p>
       <input type="submit" value="Login"><br>
       <p>
-      <a href="/register">Register</a>
+      </form>
+      <form action="/register">
+        <input type="submit" value="Register">
       </form>
       {% endif %}
     </div>

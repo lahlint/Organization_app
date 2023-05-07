@@ -8,6 +8,7 @@ User can
 * add tasks on lists, mark them as done and remove them
 * remove all tasks in a list that are marked as done
 * reset all tasks in a list as undone for the purpose of reusing a to do -list as a checklist
+* create note lists and remove them
 * add entrys on note lists
 * view a list of all list names and open lists one at a time
 

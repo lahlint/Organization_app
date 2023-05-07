@@ -1,13 +1,10 @@
 import os
 from db import db
 from sqlalchemy.sql import text
-from flask import render_template, request, redirect, session
-from werkzeug.security import check_password_hash, generate_password_hash
 from secrets import token_hex
 
 
 def check_if_username_exists(username):
-    username = request.form["username"]
     sql = text("SELECT 1 FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     db.session.commit()

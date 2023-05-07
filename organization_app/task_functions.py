@@ -1,8 +1,6 @@
 import os
 from db import db
 from sqlalchemy.sql import text
-from flask import render_template, request, redirect, session
-from werkzeug.security import check_password_hash, generate_password_hash
 from secrets import token_hex
 
 

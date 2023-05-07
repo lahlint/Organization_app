@@ -13,6 +13,7 @@
         <h3>Create a new list</h3>
         <p>List name:</p>
         <input type="text" name="list_name">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="submit" value="Create list">
       </form>
       <br>

@@ -30,3 +30,19 @@ def get_notes_id(notes_name, user_id):
     result = db.session.execute(sql, {"user_id":user_id, "notes_name":notes_name})
     notes_id = result.fetchone()[0]
     return notes_id
+
+def check_if_notes_already_exists(notes_name, user_id):
+    sql = text("SELECT 1 FROM notes WHERE name=:notes_name AND user_id=:user_id")
+    result = db.session.execute(sql, {"notes_name":notes_name, "user_id":user_id})
+    if result.fetchone():
+        return True
+    else:
+        return False
+    
+def check_rights_to_notes(user_id, notes_id):
+    sql = text("SELECT 1 FROM notes WHERE user_id=:user_id AND id=:notes_id")
+    result = db.session.execute(sql, {"user_id":user_id, "notes_id":notes_id})
+    if result.fetchone():
+        return True
+    else:
+        return False

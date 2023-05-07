@@ -4,11 +4,11 @@ body {
     max-width: 50em;
     font-family: 'Helvetica', 'Arial', sans-serif;
     line-height: 1.5;
-    background-color: beige;
+    background-color: rgb(162, 175, 169);
     
 }
 .header {
-    background-color: aquamarine;
+    background-color: rgb(169, 255, 226);
     padding: 2em 1em;
     font-size: 2em;
     border-radius: 1em;
@@ -36,11 +36,4 @@ body {
 a {
     text-decoration: none;
     color: black;
-}
-.link {
-    margin: .5em;
-    padding: .5em;
-    width: auto;
-    background-color: rgb(240, 238, 238);
-    border-radius: .5em;
 }

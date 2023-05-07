@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Remove lists</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Organization app</h1>
+    </div>
+    <div class="content">
+      <h3>Remove note lists</h3>
+      {% for notes_list in notes %}
+      <form action="/remove_notes", method="POST">
+        <div class="list_object">
+          {{notes_list[0]}}
+          <input type="hidden" name="notes_id" value="{{notes_list[1]}}">
+          <input type="submit" value="Delete">
+        </div>
+      </form>
+      {% endfor %}
+      <br>
+      <form action="/">
+        <input type="submit" value="Back to homepage">
+      </form>
+    </div>
+  </body>
+</html>

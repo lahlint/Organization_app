@@ -46,3 +46,8 @@ def check_rights_to_notes(user_id, notes_id):
         return True
     else:
         return False
+    
+def delete_notes(notes_id):
+    sql = text("DELETE FROM notes WHERE id=:notes_id")
+    db.session.execute(sql, {"notes_id":notes_id})
+    db.session.commit()

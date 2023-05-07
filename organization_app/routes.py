@@ -175,3 +175,14 @@ def show_notes_list(notes_id):
     entrys = entry_functions.get_entrys(notes_id)
     return render_template("notes_list.html", notes=notes_name, entrys=entrys, notes_id=notes_id)
 
+@app.route("/remove_note_lists")
+def remove_note_lists():
+    username = session.get("username")
+    notes = notes_functions.get_notes(username)
+    return render_template("remove_notes.html", notes=notes)
+
+@app.route("/remove_notes", methods=["POST"])
+def remove_notes():
+    notes_id = request.form["notes_id"]
+    notes_functions.delete_notes(notes_id)
+    return redirect("/remove_note_lists")

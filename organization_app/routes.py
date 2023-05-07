@@ -76,10 +76,15 @@ def add_task():
     task = request.form["task"]
     list_id = list_functions.get_list_id(list_name)
     task_functions.add_task(list_id, task)
-    return redirect("/list/"+str(list_id))
+    return redirect("/list/" + str(list_id))
 
 @app.route("/list/<list_id>")
 def show_list(list_id):
+    username = session.get("username")
+    user_id = user_functions.get_user_id(username)
+    rights = list_functions.check_rights_to_list(user_id, list_id)
+    if not rights:
+        return render_template("error.html", message="No rights to view this list")
     list_name = list_functions.get_list_name(list_id)
     tasks = task_functions.get_tasks(list_name)
     return render_template("list.html", list=list_name, tasks=tasks, list_id=list_id)
@@ -89,26 +94,26 @@ def done():
     task_id = request.form["task"]
     list_id = request.form["list"]
     task_functions.mark_task_done(task_id)
-    return redirect("/list/"+list_id)
+    return redirect("/list/" + list_id)
 
 @app.route("/undo", methods=["POST"])
 def undo():
     task_id = request.form["task"]
     list_id = request.form["list"]
     task_functions.mark_task_undone(task_id)
-    return redirect("/list/"+list_id)
+    return redirect("/list/" + list_id)
 
 @app.route("/remove_tasks", methods=["POST"])
 def remove_tasks():
     list_id = request.form["list"]
     task_functions.remove_tasks(list_id)
-    return redirect("/list/"+list_id)
+    return redirect("/list/" + list_id)
 
 @app.route("/remove_lists")
 def remove_lists():
     username = session.get("username")
     lists = list_functions.get_lists(username)
-    return render_template("remove_lists.html",lists=lists)
+    return render_template("remove_lists.html", lists=lists)
 
 @app.route("/remove_list", methods=["POST"])
 def remove_list():

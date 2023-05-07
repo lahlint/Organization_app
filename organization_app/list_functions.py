@@ -1,8 +1,6 @@
 import os
 from db import db
 from sqlalchemy.sql import text
-from flask import render_template, request, redirect, session
-from werkzeug.security import check_password_hash, generate_password_hash
 from secrets import token_hex
 
 
@@ -43,6 +41,14 @@ def delete_list(list_id):
 def check_if_list_already_exists(list_name, user_id):
     sql = text("SELECT 1 FROM lists WHERE name=:list_name AND user_id=:user_id")
     result = db.session.execute(sql, {"list_name":list_name, "user_id":user_id})
+    if result.fetchone():
+        return True
+    else:
+        return False
+    
+def check_rights_to_list(user_id, list_id):
+    sql = text("SELECT 1 FROM lists WHERE user_id=:user_id AND id=:list_id")
+    result = db.session.execute(sql, {"user_id":user_id, "list_id":list_id})
     if result.fetchone():
         return True
     else:

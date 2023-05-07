@@ -13,13 +13,17 @@
       <h3>Remove lists</h3>
       {% for list in lists %}
       <form action="/remove_list", method="POST">
-        {{list[0]}}
-        <input type="hidden" name="list_id" value="{{list[1]}}">
-        <input type="submit" value="Delete">
+        <div class="list_object">
+          {{list[0]}}
+          <input type="hidden" name="list_id" value="{{list[1]}}">
+          <input type="submit" value="Delete">
+        </div>
       </form>
       {% endfor %}
       <br>
-      <a href="/">Back to homepage</a>
+      <form action="/">
+        <input type="submit" value="Back to homepage">
+      </form>
     </div>
   </body>
 </html>

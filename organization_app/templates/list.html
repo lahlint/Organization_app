@@ -13,21 +13,24 @@
       {% for task in tasks %}
       {% if task[1] == 0 %}
       <form action="/done", method="POST">
-        {{ task[0] }}
-        <input type="hidden" name="task" value="{{task[2]}}">
-        <input type="hidden" name="list" value="{{list_id}}">
-        <input type="submit" value="Done">
+        <div class="list_object">
+          {{ task[0] }}
+          <input type="hidden" name="task" value="{{task[2]}}">
+          <input type="hidden" name="list" value="{{list_id}}">
+          <input type="submit" value="Done">
+        </div>
       </form>
       {% elif task[1] == 1 %}
       <form action="/undo", method="POST">
-        {{ task[0] }}
-        <input type="hidden" name="task" value="{{task[2]}}">
-        <input type="hidden" name="list" value="{{list_id}}">
-        <input type="submit" value="Undo">
+        <div class="list_object">
+          {{ task[0] }}
+          <input type="hidden" name="task" value="{{task[2]}}">
+          <input type="hidden" name="list" value="{{list_id}}">
+          <input type="submit" value="Undo">
+        </div>
       </form>
       {% endif %}
       {% endfor %}
-      <br>
       <br>
       <form action="/add_task" method="POST">
         <input type="text" name="task">
@@ -41,7 +44,9 @@
         <input type="submit" value="Remove done tasks">
       </form>
       <br>
-      <a href="/">Back to homepage</a>
+      <form action="/">
+        <input type="submit" value="Back to homepage">
+      </form>
     </div>
   </body>
 </html>
